@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
-public class LibraryController {
-	
-	@GetMapping("/")
-	public String index() {
-		return "index.html";
+@RequestMapping("/book")
+public class BookController {
+
+	@GetMapping("/listed-books")
+	public String booksList() {
+		return "/library/book/booksList.html";
 	}
 }

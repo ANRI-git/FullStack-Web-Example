@@ -3,15 +3,20 @@ package com.library.entities;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Book {
 	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
 	private String id;
 	private Long isbn;
-	private String titulo;
+	private String title;
 	private Integer year;
 	private Integer copies;
 	private Integer borowedCopies;
@@ -31,7 +36,7 @@ public class Book {
 		super();
 		this.id = id;
 		this.isbn = isbn;
-		this.titulo = titulo;
+		this.title = titulo;
 		this.year = year;
 		this.copies = copies;
 		this.borowedCopies = borowedCopies;
@@ -57,12 +62,12 @@ public class Book {
 		this.isbn = isbn;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Integer getYear() {
@@ -123,7 +128,7 @@ public class Book {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(titulo);
+		return Objects.hash(title);
 	}
 
 	@Override
@@ -135,12 +140,12 @@ public class Book {
 		if (getClass() != obj.getClass())
 			return false;
 		Book other = (Book) obj;
-		return Objects.equals(titulo, other.titulo);
+		return Objects.equals(title, other.title);
 	}
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", year=" + year + ", copies=" + copies
+		return "Book [id=" + id + ", isbn=" + isbn + ", titulo=" + title + ", year=" + year + ", copies=" + copies
 				+ ", borowedCopies=" + borowedCopies + ", remainingCopies=" + remainingCopies + ", registered="
 				+ registered + ", author=" + author + ", publisher=" + publisher + "]";
 	}
