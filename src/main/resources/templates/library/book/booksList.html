@@ -1,25 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Document</title>
+    <!--/*/ <th:block th:include="fragments/fragments.html :: head">
+        </th:block> /*/-->
+    <link rel="stylesheet" href="/lists.css">
+    <title>Books &bull; Library</title>
 </head>
+
 <body>
-    <div class="py-5 text-center">
+    <header class="text-center">
+        <div th:replace="fragments/fragments.html :: nav"> </div>
         <h1>Books available in the Library:</h1>
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary bg-info" a>Apple</button>
-            <button type="button" class="btn btn-primary bg-info">Samsung</button>
-            <button type="button" class="btn btn-primary bg-info">Sony</button>
-          </div>
-        <table>
-            <tr>
-                <td></td>
-            </tr>
-        </table>
+    </header>
+    <div class="container wrap">
+        <div class="mx-auto">
+            <div class="btn btn-success" href="/book/add">Add book</div>
+        </div>
+        <section class="lists">
+            <div class="mx-auto" th:if="${books.empty}">
+                <div class="alert alert-danger">No books added yet!</div>
+            </div>
+            <!-- th:if="${book.register == true}"> -->
+            <div class="books d-grid" th:each="book, itemStat : *{books}">
+                <div class="card">
+                    <img id="image" th:src="${'/img/book.png'}" th:alt="${'tarjeta de '+book.title}"
+                        class="card-img-top mx-auto" width="100" height="100">
+                    <div class="card-body">
+                        <span>ISBN: </span>
+                        <span th:text="${book.isbn}"> ISBN </span>
+                        <h3 class="card-title" th:text="${book.title}">Title</h3>
+                        <div class="row">
+                            <div class="col">
+                                <span>Years:</span>
+                                <p class="card-text" th:text="${book.year}"></p>
+                                <span>Copies:</span>
+                                <p class="card-text" th:text="${book.remainingCopies}"> Remaining copies </p>
+                                <span>Borowed:</span>
+                                <p class="card-text" th:text="${book.borowedCopies}"> Borowed copies </p>
+                            </div>
+                            <div class="col">
+                                <span> Author: </span>
+                                <p class="card-text" th:text="${book.author.name}"> </p>
+                                <span> Publicher: </span>
+                                <p class="card-text" th:text="${book.publisher.name}"> </p>
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Options</a>
+                                <ul class="dropdown-menu text-center">
+                                    <li>
+                                        <form action="/book/modify" method="post">
+                                            <div class="d-grid">
+                                                <button type="submit" name="id" id="id" class="btn btn-outline-warning"
+                                                    th:value="${book.id}">
+                                                    Modify
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="/book/register" method="post">
+                                            <div class="d-grid">
+                                                <button type="submit" name="id" id="id"
+                                                    class="btn btn-outline-secondary" th:value="${book.id}">
+                                                    Register
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="/book/delete" method="post">
+                                            <div class="d-grid">
+                                                <button type="submit" name="id" id="id" class="btn btn-outline-danger"
+                                                    th:value="${book.id}">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+    <div th:replace="fragments/fragments.html :: footer"></div>
 </body>
+
 </html>

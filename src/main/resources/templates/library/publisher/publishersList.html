@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--/*/ <th:block th:include="./fragments/fragments.html :: head">
+        </th:block> /*/-->
+    <title>Publishers &bull; Library</title>
+</head>
+
+<body>
+    <header class="text-center">
+        <div th:replace="./fragments/fragments.html :: nav"></div>
+        <h1>Publishers available in the Library:</h1>
+    </header>
+    <div class="py-5 d-flex justify-content-center container mt-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Registered</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${publishers.empty}">
+                    <td colspan="8" class="text-center"> No Publishers Added yet! </td>
+                </tr>
+                <tr th:each="publisher, itemStat : *{publishers}">
+                    <td><span th:text="${publisher.name}"> Name </span></td>
+                    <td><span th:text="${publisher.id}"> ID </span></td>
+                    <td><span th:text="${publisher.registered}"> Registered </span></td>
+                    <td>
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Options</a>
+                        <ul class="dropdown-menu text-center">
+                            <li>
+                                <!-- botones para borrar, modificar y registrar -->
+                                <form action="/publisher/modify" method="post">
+                                    <div class="d-grid">
+                                        <button type="submit" name="id" id="id" class="btn btn-outline-warning"
+                                            th:value="${publisher.id}">
+                                            Modify
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="/publisher/register" method="post">
+                                    <div class="d-grid">
+                                        <button type="submit" name="id" id="id" class="btn btn-outline-secondary"
+                                            th:value="${publisher.id}">
+                                            Register
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="/publisher/delete" method="post">
+                                    <div class="d-grid">
+                                        <button type="submit" name="id" id="id" class="btn btn-outline-danger"
+                                            th:value="${publisher.id}">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" class="text-center"><a class="btn btn-success" href="/publisher/add">Add
+                            publisher</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="./fragments/fragments.html :: footer"></div>
+</body>
+
+</html>

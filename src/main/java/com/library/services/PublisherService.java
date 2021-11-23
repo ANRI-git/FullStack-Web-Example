@@ -1,11 +1,12 @@
 package com.library.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.library.entities.Book;
 import com.library.entities.Publisher;
 import com.library.errors.ErrorService;
 import com.library.repositories.PublisherRepository;
@@ -16,6 +17,7 @@ public class PublisherService {
 	@Autowired
 	PublisherRepository publisherRepository;
 
+	@Transactional
 	public void createPublisher(String name) throws ErrorService {
 		validateInformation(name);
 
@@ -37,6 +39,10 @@ public class PublisherService {
 		} else {
 			throw new ErrorService("The publisher could not be found!");
 		}
+	}
+	
+	public List<Publisher> findAllPublishers() {
+		return publisherRepository.findAll();
 	}
 
 	public void modifyPublisher(String id, String name) throws ErrorService {

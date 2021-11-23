@@ -1,12 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!--/*/ <th:block th:include="/fragments/fragments.html :: head">
+        </th:block> /*/-->
+    <title>Authors &bull; Library</title>
 </head>
+
 <body>
-    <h1>Authors with available books:</h1>
+    <header class="text-center">
+        <div th:replace="/fragments/fragments.html :: nav"> </div>
+        <h1>Authors available in the Library:</h1>
+    </header>
+    <div class="py-5 d-flex justify-content-center container mt-3">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Registered</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${authors.empty}">
+                    <td colspan="8" class="text-center"> No Authors Added yet! </td>
+                </tr>
+                <tr th:each="author, itemStat : *{authors}">
+                    <td><span th:text="${author.name}"> Name </span></td>
+                    <td><span th:text="${author.id}"> ID </span></td>
+                    <td><span th:text="${author.registered}"> Registered </span></td>
+                    <td>
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Options</a>
+                        <ul class="dropdown-menu text-center">
+                            <li>
+                                <!-- botones para borrar, modificar y registrar -->
+                                <form action="/author/modify" method="post">
+                                    <div class="d-grid">
+                                        <button type="submit" name="id" id="id" class="btn btn-outline-warning"
+                                            th:value="${author.id}">
+                                            Modify
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="/author/register" method="post">
+                                    <div class="d-grid">
+                                        <button type="submit" name="id" id="id" class="btn btn-outline-secondary"
+                                            th:value="${author.id}">
+                                            Register
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="/author/delete" method="post">
+                                    <div class="d-grid">
+                                        <button type="submit" name="id" id="id" class="btn btn-outline-danger"
+                                            th:value="${author.id}">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" class="text-center"><a class="btn btn-success" href="/author/add">Add author</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:replace="/fragments/fragments.html :: footer"></footer>
 </body>
+
 </html>

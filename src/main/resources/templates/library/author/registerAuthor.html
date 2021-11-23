@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--/*/ <th:block th:include="fragments/fragments.html :: head">
+        </th:block> /*/-->
+    <title>Register Author &bull; Library</title>
+</head>
+
+<body>
+    <header>
+        <div th:replace="fragments/fragments.html :: nav"> </div>
+        <div class="py-5 text-center">
+            <h1>Adding a new Author:</h1>
+            <a class="btn btn-primary bg-warning border-secondary border-right-0" href="/author/">Go back</a>
+        </div>
+    </header>
+    <div class="container mt-3">
+        <h2>Enter the information of the new author below:</h2>
+        <form action="/author/save" method="post">
+            <p th:if="${error != null}" th:text="${error}"></p>
+
+            <div class="mb-3 mt-3">
+                <label for="title" class="form-label">Name:</label>
+                <input type="text" class="form-control" autocapitalize="on" name="name" id="name"
+                    placeholder="Enter the name" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add author</button>
+        </form>
+    </div>
+</body>
+<div th:replace="fragments/fragments.html :: footer"></div>
+
+</html>

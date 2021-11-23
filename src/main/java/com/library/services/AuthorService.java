@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.library.entities.Author;
 import com.library.entities.Book;
@@ -17,6 +18,7 @@ public class AuthorService {
 	@Autowired
 	AuthorRepository authorRepository;
 
+	@Transactional
 	public void createAuthor(String name) throws ErrorService {
 		validateInformation(name);
 
@@ -31,13 +33,11 @@ public class AuthorService {
 		if (id == null || id.isEmpty()) {
 			throw new ErrorService("The id field is empty!");
 		}
-
-		Optional<Author> result = authorRepository.findById(id);
-		if (result.isPresent()) {
-			return result.get();
-		} else {
-			throw new ErrorService("Author could not be found!");
-		}
+		return authorRepository.getById(id);
+	}
+	
+	public List<Author> findAllAuthors() {
+		return authorRepository.findAll();
 	}
 
 	public List<Book> queryByBooks(String name) {
