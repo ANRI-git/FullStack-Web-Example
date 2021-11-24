@@ -4,13 +4,13 @@
 <head>
     <!--/*/ <th:block th:include="fragments/fragments.html :: head">
         </th:block> /*/-->
-    <link rel="stylesheet" href="/lists.css">
+    <link rel="stylesheet" href="/lists.css" />
     <title>Books &bull; Library</title>
 </head>
 
 <body>
     <header class="text-center">
-        <div th:replace="fragments/fragments.html :: nav"> </div>
+        <div th:replace="fragments/fragments.html :: nav"></div>
         <h1>Books available in the Library:</h1>
     </header>
     <div class="container wrap">
@@ -25,7 +25,7 @@
             <div class="books d-grid" th:each="book, itemStat : *{books}">
                 <div class="card">
                     <img id="image" th:src="${'/img/book.png'}" th:alt="${'tarjeta de '+book.title}"
-                        class="card-img-top mx-auto" width="100" height="100">
+                        class="card-img-top mx-auto" width="100" height="100" />
                     <div class="card-body">
                         <span>ISBN: </span>
                         <span th:text="${book.isbn}"> ISBN </span>
@@ -35,15 +35,19 @@
                                 <span>Years:</span>
                                 <p class="card-text" th:text="${book.year}"></p>
                                 <span>Copies:</span>
-                                <p class="card-text" th:text="${book.remainingCopies}"> Remaining copies </p>
+                                <p class="card-text" th:text="${book.remainingCopies}">
+                                    Remaining copies
+                                </p>
                                 <span>Borowed:</span>
-                                <p class="card-text" th:text="${book.borowedCopies}"> Borowed copies </p>
+                                <p class="card-text" th:text="${book.borowedCopies}">
+                                    Borowed copies
+                                </p>
                             </div>
                             <div class="col">
                                 <span> Author: </span>
-                                <p class="card-text" th:text="${book.author.name}"> </p>
+                                <p class="card-text" th:text="${book.author.name}"></p>
                                 <span> Publicher: </span>
-                                <p class="card-text" th:text="${book.publisher.name}"> </p>
+                                <p class="card-text" th:text="${book.publisher.name}"></p>
                                 <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Options</a>
                                 <ul class="dropdown-menu text-center">
                                     <li>
