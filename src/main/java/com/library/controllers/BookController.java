@@ -41,10 +41,10 @@ public class BookController {
 
 	@PostMapping("/save")
 	public String saveBook(Model model, ModelMap modelMap,@RequestParam String title, @RequestParam(defaultValue="0") Long isbn,
-			@RequestParam(defaultValue="0") Integer year,@RequestParam(defaultValue="0") Integer copies,@RequestParam String author,@RequestParam String publisher)
+			@RequestParam(defaultValue="0") Integer year,@RequestParam String genre,@RequestParam(defaultValue="0") Integer copies,@RequestParam String author,@RequestParam String publisher)
 			throws ErrorService {
 		try {
-			bookService.createBook(title, isbn, year, copies, author, publisher);
+			bookService.createBook(title, isbn, year, genre, copies, author, publisher);
 		} catch (ErrorService e) {
 			modelMap.put("title", title);
 			modelMap.put("isbn", isbn);
@@ -69,6 +69,7 @@ public class BookController {
 		modelMap.put("title", b.getTitle());
 		modelMap.put("isbn", b.getIsbn());
 		modelMap.put("year", b.getYear());
+		modelMap.put("genre", b.getGenre());
 		modelMap.put("copies", b.getCopies());
 		modelMap.put("author", b.getAuthor().getId());
 		modelMap.put("publisher", b.getPublisher().getId());

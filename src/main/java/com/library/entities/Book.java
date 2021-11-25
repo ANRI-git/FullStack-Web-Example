@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.library.enums.Genres;
+
 @Entity
 public class Book {
 	@Id
@@ -18,6 +20,7 @@ public class Book {
 	private Long isbn;
 	private String title;
 	private Integer year;
+	private Genres genre;
 	private Integer copies;
 	private Integer borowedCopies;
 	private Integer remainingCopies;
@@ -31,13 +34,14 @@ public class Book {
 		super();
 	}
 	
-	public Book(String id, Long isbn, String titulo, Integer year, Integer copies, Integer borowedCopies,
+	public Book(String id, Long isbn, String titulo, Integer year, Genres genre, Integer copies, Integer borowedCopies,
 			Integer remainingCopies, Boolean registered, Author author, Publisher publisher) {
 		super();
 		this.id = id;
 		this.isbn = isbn;
 		this.title = titulo;
 		this.year = year;
+		this.genre = genre;
 		this.copies = copies;
 		this.borowedCopies = borowedCopies;
 		this.remainingCopies = remainingCopies;
@@ -76,6 +80,14 @@ public class Book {
 
 	public void setYear(Integer year) {
 		this.year = year;
+	}
+
+	public Genres getGenre() {
+		return genre;
+	}
+	
+	public void setGenre(Genres genre) {
+		this.genre = genre;
 	}
 
 	public Integer getCopies() {
@@ -145,7 +157,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", isbn=" + isbn + ", titulo=" + title + ", year=" + year + ", copies=" + copies
+		return "Book [id=" + id + ", isbn=" + isbn + ", title=" + title + ", year=" + year + ",genre=" + genre + ", copies=" + copies
 				+ ", borowedCopies=" + borowedCopies + ", remainingCopies=" + remainingCopies + ", registered="
 				+ registered + ", author=" + author + ", publisher=" + publisher + "]";
 	}

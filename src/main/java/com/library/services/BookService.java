@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.library.entities.Book;
+import com.library.enums.Genres;
 import com.library.errors.ErrorService;
 import com.library.repositories.BookRepository;
 
@@ -22,14 +23,15 @@ public class BookService {
 	PublisherService publisherServ;
 
 	@Transactional
-	public void createBook(String title, Long isbn, Integer year, Integer copies, String author_id, String publisher_id)
+	public void createBook(String title, Long isbn, Integer year, String genre , Integer copies, String author_id, String publisher_id)
 			throws ErrorService {
-		validateInformation(title, isbn, year, copies, author_id, publisher_id);
+		validateInformation(title, isbn, year, genre, copies, author_id, publisher_id);
 
 		Book book = new Book();
 		book.setIsbn(isbn);
 		book.setTitle(title);
 		book.setYear(year);
+		book.setGenre(Genres.valueOf(genre));
 		book.setCopies(copies);
 		book.setBorowedCopies(0);
 		book.setRemainingCopies(copies);
@@ -48,15 +50,16 @@ public class BookService {
 		return bookRepository.findAll();
 	}
 
-	public void modifyBook(String id, Long isbn, String title, Integer year, Integer copies, String author_id,
+	public void modifyBook(String id, Long isbn, String title, Integer year, String genre, Integer copies, String author_id,
 			String publisher_id) throws ErrorService {
-		validateInformation(title, isbn, year, copies, author_id, publisher_id);
+		validateInformation(title, isbn, year, genre, copies, author_id, publisher_id);
 
 		Optional<Book> result = bookRepository.findById(id);
 		if (result.isPresent()) {
 			Book b = result.get();
 			b.setTitle(title);
 			b.setYear(year);
+			b.setGenre(Genres.valueOf(genre));
 			b.setCopies(copies);
 			b.setAuthor(authorServ.queryAuthor(author_id));
 			b.setPublisher(publisherServ.queryPublisher(publisher_id));
@@ -66,7 +69,7 @@ public class BookService {
 		}
 	}
 
-	private void validateInformation(String title, Long isbn, Integer year, Integer copies, String author_id,
+	private void validateInformation(String title, Long isbn, Integer year, String genre, Integer copies, String author_id,
 			String publisher_id) throws ErrorService {
 		if (title == null || title.isEmpty()) {
 			throw new ErrorService("The TITLE field is empty!");
@@ -76,6 +79,9 @@ public class BookService {
 		}
 		if (year == null || year == 0) {
 			throw new ErrorService("The YEAR field is empty!");
+		}
+		if (genre == null || genre.isEmpty()) {
+			throw new ErrorService("The GENRE field is empty!");
 		}
 		if (copies == null || copies == 0) {
 			throw new ErrorService("The COPIES field is empty!");

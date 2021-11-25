@@ -10,21 +10,21 @@ public class LibraryController {
 	
 	@GetMapping("")
 	public String index() {
-		return "index.html";
+		return "index";
 	}
 
 	@GetMapping("/login")
 	public String login() {
-		return "login.html";
+		return "login";
 	}
 
 	@GetMapping("/register")
 	public String register() {
-		return "register.html";
+		return "register";
 	}
 
 	@GetMapping("/logout")
 	public String logout() {
-		return "logout.html";
+		return "logout";
 	}
 }
